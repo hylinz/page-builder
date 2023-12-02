@@ -16,4 +16,11 @@ export interface ActionResponse {
     custom?: string; 
     text?: string; 
   }
+
+  export interface FormResponse {
+    success: boolean;
+    message: string;
+    errors: any[]; // This can be a specific type for errors if needed
+    fieldValues: { [key: string]: any }; // Index signature for flexible key-value pairs
+  }
   

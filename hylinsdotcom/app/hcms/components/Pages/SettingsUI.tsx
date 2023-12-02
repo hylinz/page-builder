@@ -6,6 +6,9 @@ import GeneralSettings from "../GeneralSettings";
 import FooterSettings from "../FooterSettings";
 import SocialSettings from "../SocialSettings";
 import AdvancedSettings from "../AdvancedSettings";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function SettingsUI(props: any) {
   const [currentTab, setCurrentTab] = useState("general");
   const ActiveClass =
@@ -78,6 +81,18 @@ export default function SettingsUI(props: any) {
         {currentTab === "social" ? <SocialSettings /> : null}
         {currentTab === "advanced" ? <AdvancedSettings /> : null}
       </section>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

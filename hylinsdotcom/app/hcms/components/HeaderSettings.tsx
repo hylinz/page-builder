@@ -2,12 +2,14 @@
 import { FaRegCircleQuestion } from "react-icons/fa6";
 import { FaRegPlusSquare, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { CiMenuBurger } from "react-icons/ci";
-
-import { useRef, useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useFormState, useFormStatus } from "react-dom";
+import { UpdateHeaderConfig } from "@/app/actions/settings-actions";
+import { toast } from "react-toastify";
 
 export default function HeaderSettings() {
   const menuOptionInput = useRef<HTMLInputElement>(null);
-  const formSubmit = useRef(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   type RadioControl = {
     header: boolean;
@@ -25,13 +27,15 @@ export default function HeaderSettings() {
     ) {
       return false;
     }
-  
-    const sanitizedValue = menuOptionInput.current.value.replace(/[^a-zA-Z0-9-_]/g, '');
-  
+
+    const sanitizedValue = menuOptionInput.current.value.replace(
+      /[^a-zA-Z0-9-_]/g,
+      ""
+    );
+
     setMenuOptions([...menuOptions, sanitizedValue]);
     menuOptionInput.current.value = "";
   };
-  
 
   const deleteMenuOption = (i: number) => {
     if (i < 0 || i >= menuOptions.length) {
@@ -95,10 +99,32 @@ export default function HeaderSettings() {
     setRadioSetting(updatedRadioControl);
   };
   //////////////// Radio Control End ////////////////
+  //////////////// Form State ////////////////
+  const [formState, formAction] = useFormState(UpdateHeaderConfig, {
+    success: false,
+    message: "",
+    errors: [],
+    fieldValues: {
+        headerEnabled: radioControl.header,
+        style: "",
+        menuEnabled: radioControl.menu,
+        menuOptions: menuOptions
+    },
+  });
+  useEffect(() => {
+    if (formState && formState.success) {
+      toast.success(formState && formState.message ? formState.message : "");
+    }
+  }, [formState]);
+  
+
+    //////////////// Form State End ////////////////
+
+
 
   return (
     <div className="p-4 w-full">
-      <form action="flex flex-col">
+      <form ref={formRef} action={formAction} className="flex flex-col">
         {/* main header control */}
         <h3 className="font-semibold text-2xl border-b-2">
           General Header Settings
@@ -199,17 +225,30 @@ export default function HeaderSettings() {
         </div>
         {/* menu options  */}
 
-        <div className="flex items-center w-full justify-start my-6">
+        <div
+          className={`${
+            !radioControl.header || !radioControl.menu
+              ? "hidden"
+              : "flex items-center w-full justify-start my-6"
+          }`}
+        >
           <label className="flex items-center font-semibold mr-4 text-l">
             Menu links
           </label>
-          <label className="mx-2 text-center font-medium">Page name</label>
+          <label className="mx-2 text-center font-medium">Add a Page</label>
 
           <input
             type="text"
             className="input input-bordered input-secondary max-w-xs bg-primary"
             placeholder="mypagename"
             ref={menuOptionInput}
+          />
+
+            <input
+            type="text"
+            className="hidden"
+            name="menuOptions"
+            value={menuOptions}
           />
           <button
             onClick={(e) => {
@@ -271,7 +310,9 @@ export default function HeaderSettings() {
             </ul>
           </div>
         </div>
+        <button className="btn btn-success">Save settings</button>
       </form>
+
     </div>
   );
 }
