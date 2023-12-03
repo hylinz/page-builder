@@ -21,16 +21,16 @@ export default function AdminHeader() {
                 <ul className="">
                 <li className="">
                     <Link
-                      href={"/"}
-                      className={currentPath === "/" ? "active" : ""}
+                      href={"/hcms/admin/pages"}
+                      className={currentPath === "/hcms/admin/pages" ? "active" : ""}
                     >
                       View Pages
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href={"/"}
-                      className={currentPath === "/" ? "active" : ""}
+                      href={"/hcms/admin/create-page"}
+                      className={currentPath === "/hcms/admin/create-page" ? "active" : ""}
                     >
                       Create Page
                     </Link>

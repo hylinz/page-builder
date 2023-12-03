@@ -98,11 +98,9 @@ const GlobalSettingsSchema = new mongoose.Schema({
             options: {
                 url: {
                     type: String,
-                    required: true
                 },
                 displayName: {
                     type: String,
-                    required: true
                 }
             }
         }],
@@ -115,11 +113,9 @@ const GlobalSettingsSchema = new mongoose.Schema({
             options: {
                 url: {
                     type: String,
-                    required: true
                 },
                 image: {
                     type: String,
-                    required: true
                 }
             }
         }],
@@ -132,6 +128,17 @@ const GlobalSettingsSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
+
+const activitySchema = new mongoose.Schema({
+    description: {
+      type: String,
+    },
+    formattedDate: {
+      type: String,
+    },
+  }, { timestamps: true });
+
 export const Pages = mongoose.models.Pages || mongoose.model("Pages", pageSchema)
 export const GeneralSettings = mongoose.models.GeneralSettings || mongoose.model("GeneralSettings", GlobalSettingsSchema)
+export const Activity = mongoose.models.Activity || mongoose.model("Activity", activitySchema)
 

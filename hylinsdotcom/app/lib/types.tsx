@@ -24,3 +24,15 @@ export interface ActionResponse {
     fieldValues: { [key: string]: any }; // Index signature for flexible key-value pairs
   }
   
+  export interface Page {
+      _id: any; // Assuming ObjectId is a specific type
+      title: string;
+      body: any[]; // You might specify a more specific type than `any[]`
+      template: string;
+      settings: any[]; // You might specify a more specific type than `any[]`
+      createdAt: Date;
+      updatedAt: Date;
+      __v: number;
+  }
+
+  

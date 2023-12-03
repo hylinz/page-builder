@@ -6,6 +6,8 @@ import { useState, useEffect, useRef } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { UpdateHeaderConfig } from "@/app/actions/settings-actions";
 import { toast } from "react-toastify";
+import RadioButtonToggle from "@/app/forms/form-components/input/radio-button-toggle";
+import DropDownList from "@/app/forms/form-components/input/drop-down";
 
 export default function HeaderSettings() {
   const menuOptionInput = useRef<HTMLInputElement>(null);
@@ -105,10 +107,10 @@ export default function HeaderSettings() {
     message: "",
     errors: [],
     fieldValues: {
-        headerEnabled: radioControl.header,
-        style: "",
-        menuEnabled: radioControl.menu,
-        menuOptions: menuOptions
+      headerEnabled: radioControl.header,
+      style: "",
+      menuEnabled: radioControl.menu,
+      menuOptions: menuOptions,
     },
   });
   useEffect(() => {
@@ -116,11 +118,8 @@ export default function HeaderSettings() {
       toast.success(formState && formState.message ? formState.message : "");
     }
   }, [formState]);
-  
 
-    //////////////// Form State End ////////////////
-
-
+  //////////////// Form State End ////////////////
 
   return (
     <div className="p-4 w-full">
@@ -133,27 +132,12 @@ export default function HeaderSettings() {
           <label className="flex items-center font-semibold mr-4 text-l flex-1">
             Header enabled?
           </label>
-          <div className="flex-1 flex items-center">
-            <input
-              type="checkbox"
-              name="headerEnabled"
-              className="toggle toggle-success"
-              onChange={() => handleRadioChange("header")}
-              checked={radioControl.header}
-            />
-
-            <button
-              className="mx-2 tooltip"
-              onClick={(e) => {
-                e.preventDefault();
-              }}
-              data-tip="
-            Should the header be enabled on the site? Turning this off means the menu will also be unavailable.
-            "
-            >
-              <FaRegCircleQuestion className="h-6 w-6" />
-            </button>
-          </div>
+          <RadioButtonToggle
+            onChange={() => handleRadioChange("header")}
+            checked={radioControl.header}
+            name={"headerEnabled"}
+            toolTip="Should the header be enabled on the site? Turning this off means the menu will also be unavailable."
+          />
         </div>
 
         {/* style  */}
@@ -161,34 +145,25 @@ export default function HeaderSettings() {
           <label className="flex items-center font-semibold mr-4 text-l flex-1">
             Choose a style for your header
           </label>
-          <div className="flex-1 flex items-center">
-            <select
-              name="style"
-              disabled={!radioControl.header}
-              className="select select-secondary bg-primary text-secondary w-full max-w-xs"
-              defaultValue="default" // Set defaultValue here
-            >
-              <option value="default" disabled>
-                Select a style ...
-              </option>
-              <option value="default">Default</option>
-            </select>
-            <button
-              className="mx-2 tooltip"
-              onClick={(e) => {
-                e.preventDefault();
-              }}
-              data-tip={`${
-                !radioControl.header
-                  ? "You cannot select a style for a disabled header :("
-                  : "Choose a style form our template headers"
-              }`}
-            >
-              <FaRegCircleQuestion className="h-6 w-6" />
-            </button>
-          </div>
+          <DropDownList
+            name="style"
+            disabled={!radioControl.header}
+            tooltipDisabledMessage="You cannot select a style for a disabled header :("
+            tooltipEnabledMessage="Choose a style form our template headers"
+            toolTipCondition={radioControl.header}
+            defaultValue=""
+            options={[
+              {
+                value: "",
+                label: "Select one ...",
+              },
+              {
+                value: "default",
+                label: "Default",
+              },
+            ]}
+          />
         </div>
-
         <h3 className="font-semibold text-2xl border-b-2">
           Header Menu Settings
         </h3>
@@ -198,32 +173,18 @@ export default function HeaderSettings() {
           <label className="flex items-center font-semibold mr-4 text-l flex-1">
             Menu enabled?
           </label>
-          <div className="flex-1 flex items-center">
-            <input
-              type="checkbox"
-              name="menuEnabled"
-              className="toggle toggle-success bg-primary"
-              onChange={() => handleRadioChange("menu")}
-              checked={radioControl.menu && radioControl.header}
-              disabled={!radioControl.header}
-            />
 
-            <button
-              className="mx-2 tooltip"
-              onClick={(e) => {
-                e.preventDefault();
-              }}
-              data-tip={`${
-                !radioControl.header
-                  ? "Menu cannot be enabled if the header is disabled"
-                  : "Should the menu be visible?"
-              }`}
-            >
-              <FaRegCircleQuestion className="h-6 w-6" />
-            </button>
-          </div>
+          <RadioButtonToggle
+            onChange={() => handleRadioChange("menu")}
+            checked={radioControl.menu && radioControl.header}
+            name={"menuEnabled"}
+            toolTip="Should the header be enabled on the site? Turning this off means the menu will also be unavailable."
+            conditionalToolTip="Menu cannot be enabled if the header is disabled"
+            toolTipCondition={radioControl.header}
+            disabled={!radioControl.header}
+          />
         </div>
-        {/* menu options  */}
+        {/* menu options Custom component  */}
 
         <div
           className={`${
@@ -244,10 +205,11 @@ export default function HeaderSettings() {
             ref={menuOptionInput}
           />
 
-            <input
+          <input
             type="text"
             className="hidden"
             name="menuOptions"
+            readOnly
             value={menuOptions}
           />
           <button
@@ -312,7 +274,6 @@ export default function HeaderSettings() {
         </div>
         <button className="btn btn-success">Save settings</button>
       </form>
-
     </div>
   );
 }

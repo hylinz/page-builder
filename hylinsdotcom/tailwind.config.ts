@@ -23,9 +23,9 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-      colors: {
-        windowsBlue: "#265fde",
-        windowsGreen: "#3a9838",
+      textColor: {
+        link: "#005E7C", 
+        linkHover: "#001242", 
       },
     },
   },

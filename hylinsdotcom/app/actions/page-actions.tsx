@@ -79,3 +79,38 @@ export const getPageData = async (name: string) => {
     };
   }
 };
+
+
+export const getAllPages = async () => {
+  let response: ActionResponse = {
+    success: false,
+    message: "",
+    data: [],
+  };
+
+  try {
+    connectToDB();
+
+    const pageData = await Pages.find();
+    // No page data found
+    if (!pageData || pageData.length === 0) {
+      return {
+        success: false,
+        message: `Could not find pages`,
+        data: [],
+      };
+    }
+
+    response.success = true;
+    response.data = pageData;
+
+    return response;
+  } catch (error) {
+    console.log(`Failed to add note: ${error}`);
+    return {
+      success: false,
+      message: `Could not find pages`,
+      data: [],
+    };
+  }
+};
