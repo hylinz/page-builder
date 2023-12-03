@@ -19,14 +19,19 @@ const config: Config = {
         "bs-custom-down": "0 4px 0 0 rgba(0, 0, 0, 0.6)",
       },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        'imageUrl': "url('/header-placeholder.jpg')",
+
       },
       textColor: {
         link: "#005E7C", 
         linkHover: "#001242", 
       },
+      minHeight: {
+        headerImageS: "100px",
+        headerImageM: "200px",
+        headerImageL: "400px",
+        headerImageXL: "660px",
+      }
     },
   },
   daisyui: {

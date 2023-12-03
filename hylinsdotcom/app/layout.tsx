@@ -24,7 +24,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {url && url.includes('/hcms') ? null : <Header />}
+        <main className="flex min-h-screen flex-col relative">
         {children}
+        </main>
         {url && url.includes('/hcms') ? null : <Footer />}
       </body>
     </html>
