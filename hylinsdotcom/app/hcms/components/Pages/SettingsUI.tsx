@@ -8,6 +8,7 @@ import SocialSettings from "../SocialSettings";
 import AdvancedSettings from "../AdvancedSettings";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TemplateSettings from "../TemplateSettings";
 
 export default function SettingsUI(props: any) {
   const [currentTab, setCurrentTab] = useState("general");
@@ -63,6 +64,16 @@ export default function SettingsUI(props: any) {
             </li>
             <li className="me-2">
               <button
+                onClick={() => setCurrentTab("template")}
+                className={`inline-flex items-center justify-center p-4 border-b-2 ${
+                  currentTab === "template" ? ActiveClass : InactiveClass
+                } group`}
+              >
+                Templates
+              </button>
+            </li>
+            <li className="me-2">
+              <button
                 onClick={() => setCurrentTab("advanced")}
                 className={`inline-flex items-center justify-center p-4 border-b-2 ${
                   currentTab === "advanced" ? ActiveClass : InactiveClass
@@ -79,6 +90,7 @@ export default function SettingsUI(props: any) {
         {currentTab === "header" ? <HeaderSettings /> : null}
         {currentTab === "footer" ? <FooterSettings /> : null}
         {currentTab === "social" ? <SocialSettings /> : null}
+        {currentTab === "template" ? <TemplateSettings /> : null}
         {currentTab === "advanced" ? <AdvancedSettings /> : null}
       </section>
       <ToastContainer

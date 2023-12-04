@@ -32,7 +32,10 @@ export const UpdateHeaderConfig = async (
         console.log('yep')
     }
 
-    console.log(headerEnabled, style, menuEnabled, menuOptions)
+//    console.log(headerEnabled, style, menuEnabled, menuOptions)
+
+    console.log(menuOptions)
+    return response
     
     try {
       connectToDB();

@@ -40,7 +40,7 @@ export default async function PageHeader(props: HeaderProps) {
     <>
       <header className={headerStyle}>
         {headerTitle ? (
-          <h1 className={`text-${headerTitleColor} text-${headerTitleSize}`}>{headerTitle}</h1>
+          <h2 className={`text-${headerTitleColor} text-${headerTitleSize}`}>{headerTitle}</h2>
         ) : null}
       </header>
     </>

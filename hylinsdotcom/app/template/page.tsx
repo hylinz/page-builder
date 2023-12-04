@@ -1,20 +1,50 @@
-import PageHeader from "../lib/templates/resources/common/PageHeader";
+import HeroFigure from "../lib/templates/resources/common/HeroFigure";
+import HeroOverlay from "../lib/templates/resources/common/HeroOverlay";
+import HeroText from "../lib/templates/resources/common/HeroText";
+import SectionText from "../lib/templates/resources/common/SectionText";
 
 export default async function Page() {
   return (
     <>
-      <PageHeader
-        size="xl" // string (required) - Specify the size of the header image. Options: 's', 'm', 'l', 'xl'
-        image={true} // boolean (required) - Set to true if you want to display an image in the header
-        imageUrl={`bg-[url('/header-placeholder.jpg')]`} // string (optional) - URL of the header image
-        bgColor="#ffffff" // string (optional) - Background color of the header if no image is provided
-        headerTitle="My Header Title" // string (optional) - Title to be displayed in the header
-        headerTitleColor="primary" // string (optional) - Text color of the header title
-        headerTitleSize="text-2xl" // string (optional) - Font size of the header title
-        headerTitlePosition="center-bottom" // string (optional) - Position of the header title. Options: 'top-left', 'top-center', 'top-right', 'center-left', 'center', 'center-right', 'bottom-left', 'bottom-center', 'bottom-right'
+      <HeroOverlay 
+        opacity='20'
+        image='url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg)'
+        headerTitle='My Site'
+        titleContent='Lots of cool stuff can be found here, and you can press teh bnutton betllow to learn more, spelling is not a thing you will learn here.'
+        buttonText='Click me bitch'
+        link="/test"
       />
-
-      <section>hello</section>
+      <HeroText
+      contentPosition="middle-center"
+      headerTitle="This is my Title"
+      titleContent="You can put whatever you want here and it shall be shown!"
+      buttonText="Britney bitch"
+      link="/"
+      textColor="text-secondary"
+      buttonColor="btn-secondary"
+      backgroundColor="bg-primary"
+      />
+    <HeroFigure 
+        image="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
+        imageHeight={400}
+        imageWidth={200}
+        altText="Picture of spiderman"
+        reverse={true}
+        headerTitle="Spunker-Man!"
+        titleContent="You can not get webbed by spunk man, he's got the best web in the city"
+        buttonText="Click here"
+        link="/static"
+        textColor="text-primary"
+        buttonColor="btn-primary"
+        backgroundColor="bg-secondary"
+    />
+    <SectionText 
+        contentPosition="left-middle"
+        headerTitle="Here is a bunch of text"
+        titleContent="Here is a bunch of other stuff which can be super interesting"
+        textColor="text-secondary"
+        backgroundColor="bg-primary"
+    />
     </>
   );
 }
