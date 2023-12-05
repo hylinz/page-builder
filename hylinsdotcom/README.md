@@ -12,3 +12,6 @@ Image storage
 Menu styles
 Header Styles
 More design options
+dynamic theme colors
+Social icons
+Footer styles
