@@ -1,5 +1,5 @@
 import { Page } from "@/app/lib/types";
-import PageDesignerUI from "../../components/Pages/PageDesignerUI";
+import PageDesignerUI from "../../components/Pages/page-designer/PageDesignerUI";
 export default async function Page() {
 
     // const pages = await getAllPages();
@@ -8,8 +8,7 @@ export default async function Page() {
 
     
     return (
-        <div className="bg-gradient-to-r from-white-gradient-start via-white-gradient-middle to-white-gradient-end w-full h-screen flex">
-  
+        <div className="bg-gradient-to-r from-white-gradient-start via-white-gradient-middle to-white-gradient-end w-full h-screen flex relative overflow-x-hidden">
             <PageDesignerUI />
         </div>
   );

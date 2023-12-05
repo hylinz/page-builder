@@ -6,8 +6,8 @@ export default function AdminHeader() {
   const currentPath = usePathname();
 
   return (
-<section className="min-h-full px-4 shadow-bs-custom-right bg-secondary text-primary">
-      <div className="navbar bg-secondary text-primary justify-center ">
+<section className="min-h-full px-4 shadow-bs-custom-right bg-neutral text-primary">
+      <div className="navbar text-primary justify-center ">
         <div className="navbar-center">
           <ul className="menu menu-vertical">
             <li>

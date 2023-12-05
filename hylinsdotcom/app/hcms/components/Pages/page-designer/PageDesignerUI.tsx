@@ -2,16 +2,16 @@
 import HeroText from "@/app/lib/templates/resources/common/HeroText";
 import SectionText from "@/app/lib/templates/resources/common/SectionText";
 import HeroOverlay from "@/app/lib/templates/resources/common/HeroOverlay";
-import { CiEdit } from "react-icons/ci";
-import { FaArrowDown, FaArrowUp, FaPlus } from "react-icons/fa";
+// import componentList from "@/app/lib/component-list"
+import { FaPlus } from "react-icons/fa";
 
 import Footer from "@/app/ui/Footer";
 import Header from "@/app/ui/Header";
 import { useState } from "react";
 import CompDesignerBtns from "./DesignerUI-component-buttons";
+import DesignerOptionsUI from "./DesignerOptionsUI";
 
 export default function PageDesignerUI() {
-
   // Main controll state
   const [pageComponents, setPageComponents] = useState<string[]>([]);
   
@@ -66,7 +66,7 @@ export default function PageDesignerUI() {
 
   return (
     <>
-      <section className="w-full overflow-auto p-4 bg-primary">
+      <section className="w-full overflow-y-auto p-4 bg-primary">
         <Header preview={true} />
         <div
           onDrop={handleOnDrop}
@@ -133,51 +133,7 @@ export default function PageDesignerUI() {
           <Footer preview={true} />
         </div>
       </section>
-      <section className="px-4 h-screen shadow-bs-custom-right bg-base-200 text-secondary border-l-2 border-black">
-        <div className="navbar justify-center ">
-          <div className="navbar-center">
-            <ul className="menu menu-vertical">
-              <li>
-                <details>
-                  <summary>General settings</summary>
-                  <ul className="">
-                    <li className="">Name</li>
-                    <li>Template</li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details>
-                  <summary>Components</summary>
-                  <ul className="p-0">
-                    <li
-                      className={`rounded border-primary border-2 bg-success p-2.5 text-center font-bold hover:cursor-grab my-2}`}
-                      draggable
-                      onDragStart={(e) => handleComponentDrag(e, "heroText")}
-                    >
-                      Hero Text Component
-                    </li>
-                    <li
-                      className={`rounded border-primary border-2 bg-success p-2.5 text-center font-bold hover:cursor-grab my-2}`}
-                      draggable
-                      onDragStart={(e) => handleComponentDrag(e, "sectionText")}
-                    >
-                      Section Text Component
-                    </li>
-                    <li
-                      className={`rounded border-primary border-2 bg-success p-2.5 text-center font-bold hover:cursor-grab my-2}`}
-                      draggable
-                      onDragStart={(e) => handleComponentDrag(e, "heroOverlay")}
-                    >
-                      Hero Overlay Component
-                    </li>
-                  </ul>
-                </details>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
+      <DesignerOptionsUI handleComponentDrag={handleComponentDrag}/>
     </>
   );
 }

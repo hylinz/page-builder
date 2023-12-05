@@ -11,6 +11,7 @@ const CompDesignerBtns = (props: ComponentActions) => {
     const { moveComponent, deleteComponent, i } = props
 
     return (
+        <>
         <div className="absolute top-2 right-2 flex">
         <button className="btn btn-primary mx-2">
           <CiEdit />
@@ -45,6 +46,7 @@ const CompDesignerBtns = (props: ComponentActions) => {
           X
         </button>
       </div>
+      </>
     )
 }
 
