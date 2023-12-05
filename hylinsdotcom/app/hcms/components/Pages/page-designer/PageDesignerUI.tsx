@@ -2,27 +2,35 @@
 import HeroText from "@/app/lib/templates/resources/common/HeroText";
 import SectionText from "@/app/lib/templates/resources/common/SectionText";
 import HeroOverlay from "@/app/lib/templates/resources/common/HeroOverlay";
-// import componentList from "@/app/lib/component-list"
 import { FaPlus } from "react-icons/fa";
-
 import Footer from "@/app/ui/Footer";
 import Header from "@/app/ui/Header";
 import { useState } from "react";
 import CompDesignerBtns from "./DesignerUI-component-buttons";
 import DesignerOptionsUI from "./DesignerOptionsUI";
+import ComponentSettings from "./ComponentSettings";
+
+interface PageComponent {
+  _name: string;
+  _displayName: string;
+  _settings?: any;
+}
+
+
 
 export default function PageDesignerUI() {
   // Main controll state
-  const [pageComponents, setPageComponents] = useState<string[]>([]);
+  const [pageComponents, setPageComponents] = useState<PageComponent[]>([]);
   
   // Drag options
   const [draggingOver, setDragOver] = useState<boolean>(false);
-  const handleComponentDrag = (e: React.DragEvent, componentType: string) => {
-    e.dataTransfer.setData("componentType", componentType);
+
+  const handleComponentDrag = (e: React.DragEvent, component: string) => {
+    e.dataTransfer.setData("component", component);
   };
 
   const handleOnDrop = (e: React.DragEvent) => {
-    const componentType = e.dataTransfer.getData("componentType") as string;
+    const componentType = JSON.parse(e.dataTransfer.getData("component"));
     setPageComponents([...pageComponents, componentType]);
   };
 
@@ -66,7 +74,7 @@ export default function PageDesignerUI() {
 
   return (
     <>
-      <section className="w-full overflow-y-auto p-4 bg-primary">
+      <section className="w-full overflow-y-auto m-4 bg-primary custom-scrollbar rounded-md">
         <Header preview={true} />
         <div
           onDrop={handleOnDrop}
@@ -74,9 +82,10 @@ export default function PageDesignerUI() {
           className=" shadow flex-co w-full h-full flex-col"
         >
           {pageComponents && pageComponents.length > 0 ? (
-            pageComponents.map((component: string, i: number) =>
-              component === "heroText" ? (
+            pageComponents.map((component: PageComponent, i: number) =>
+              component._name === "heroText" ? (
                 <div className="relative" key={i}>
+                  <ComponentSettings settings={component._settings} index={i} />
                   <div className="absolute top-2 right-2">
                   <CompDesignerBtns 
                    moveComponent={moveComponent} 
@@ -86,7 +95,7 @@ export default function PageDesignerUI() {
                   </div>
                   <HeroText preview={true} />
                 </div>
-              ) : component === "sectionText" ? (
+              ) : component._name === "sectionText" ? (
                 <div className="relative" key={i}>
                   <div className="absolute top-2 right-2">
                   <CompDesignerBtns 
@@ -97,7 +106,7 @@ export default function PageDesignerUI() {
                   </div>
                   <SectionText preview={true} />
                 </div>
-              ) : component === "heroOverlay" ? (
+              ) : component._name === "heroOverlay" ? (
                 <div className="relative" key={i}>
                   <div className="absolute top-2 right-2">
                   <CompDesignerBtns 
@@ -119,11 +128,9 @@ export default function PageDesignerUI() {
               onDragLeave={(e) => setDragOver(false)}
               onDrop={(e) => setDragOver(false)}
             >
-              <h3 className="mb-5 text-2xl font-bold">
-                Drag and drop components here to start building!
-              </h3>
+              <h3 className="mb-5 text-2xl font-bold">Drag and drop components here to start building</h3>
               <div
-                className={`w-32 h-32 bg-base-200 rounded flex items-center justify-center opacity-70 hover:cursor-pointer `}
+                className={`w-32 h-32 bg-base-200 rounded flex items-center justify-center opacity-70  `}
               >
                 <FaPlus className="text-secondary w-14 h-14" />
               </div>

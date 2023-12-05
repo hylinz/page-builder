@@ -6,7 +6,6 @@ interface HeroText {
   contentPosition?: string;
   headerTitle?: string;
   titleContent?: string;
-  buttonText?: string;
   textColor?: string;
   backgroundColor?: string;
 }

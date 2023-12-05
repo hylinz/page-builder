@@ -1,5 +1,6 @@
 import { Page } from "@/app/lib/types";
 import PageDesignerUI from "../../components/Pages/page-designer/PageDesignerUI";
+import "../../ui/admin.css";
 export default async function Page() {
 
     // const pages = await getAllPages();
