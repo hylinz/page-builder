@@ -14,7 +14,11 @@ type bool, type str etc
 # 06/12
 ## Notes dev notes
 Productive day, had a bunch of shit going against me to begin with, couldnt figure out a simple state thing between components, kept getting infitity loop errors whatever that means
-Really worked out the dynamic input buttons and preview shit works absolutely fantastic apart from a few tailwind issues, I did it by specifying certain inputs such as number, input, textarea etc and then build and map props against my static component setting file, this allows for easy access to adding new forms. All you need to do is update the static file & match it to the defined fields, there are definitively more work to be done in this area to allow for much more flexibility but at the moment it is working like a charm for simple things such as text input, color changes etc.
+
+Really worked out the dynamic input buttons and preview shit works absolutely fantastic apart from a few tailwind issues, I did it by specifying certain inputs such as number, input, textarea etc and then build and map props against my static component setting file, this allows for easy access to adding new forms. 
+
+All you need to do is update the static file & match it to the defined fields, there are definitively more work to be done in this area to allow for much more flexibility but at the moment it is working like a charm for simple things such as text input, color changes etc.
+
 Happy with progress
 
 # To Do:
