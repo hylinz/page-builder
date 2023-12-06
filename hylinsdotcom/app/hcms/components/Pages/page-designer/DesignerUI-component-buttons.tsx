@@ -1,4 +1,3 @@
-import { CiEdit } from "react-icons/ci";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 
 interface ComponentActions {
@@ -13,9 +12,6 @@ const CompDesignerBtns = (props: ComponentActions) => {
     return (
         <>
         <div className="absolute top-2 right-2 flex">
-        <button className="btn btn-primary mx-2">
-          <CiEdit />
-        </button>
         <button
           onClick={(e) => {
             e.preventDefault();

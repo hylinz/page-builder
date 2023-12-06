@@ -9,19 +9,18 @@ import { useState } from "react";
 import CompDesignerBtns from "./DesignerUI-component-buttons";
 import DesignerOptionsUI from "./DesignerOptionsUI";
 import ComponentSettings from "./ComponentSettings";
-
+import { Suspense } from "react";
+import Loading from "@/app/hcms/admin/create-page/loading";
 interface PageComponent {
   _name: string;
   _displayName: string;
   _settings?: any;
 }
 
-
-
 export default function PageDesignerUI() {
   // Main controll state
   const [pageComponents, setPageComponents] = useState<PageComponent[]>([]);
-  
+
   // Drag options
   const [draggingOver, setDragOver] = useState<boolean>(false);
 
@@ -74,6 +73,7 @@ export default function PageDesignerUI() {
 
   return (
     <>
+    <Suspense fallback={<Loading />}>
       <section className="w-full overflow-y-auto m-4 bg-primary custom-scrollbar rounded-md">
         <Header preview={true} />
         <div
@@ -84,39 +84,60 @@ export default function PageDesignerUI() {
           {pageComponents && pageComponents.length > 0 ? (
             pageComponents.map((component: PageComponent, i: number) =>
               component._name === "heroText" ? (
-                <div className="relative" key={i}>
-                  <ComponentSettings settings={component._settings} index={i} />
-                  <div className="absolute top-2 right-2">
-                  <CompDesignerBtns 
-                   moveComponent={moveComponent} 
-                   deleteComponent={deleteComponent} 
-                   i={i}
+                <>
+                  <ComponentSettings
+                    key={i}
+                    settings={component._settings}
+                    index={i}
                   />
+                  <div className="relative" key={i}>
+                    <div className="absolute top-2 right-2">
+                      <CompDesignerBtns
+                        moveComponent={moveComponent}
+                        deleteComponent={deleteComponent}
+                        i={i}
+                      />
+                    </div>
+                    <HeroText preview={true} />
                   </div>
-                  <HeroText preview={true} />
-                </div>
+                </>
               ) : component._name === "sectionText" ? (
-                <div className="relative" key={i}>
-                  <div className="absolute top-2 right-2">
-                  <CompDesignerBtns 
-                   moveComponent={moveComponent} 
-                   deleteComponent={deleteComponent} 
-                   i={i}
+                <>
+                  <ComponentSettings
+                    key={i}
+                    settings={component._settings}
+                    index={i}
                   />
+
+                  <div className="relative" key={i}>
+                    <div className="absolute top-2 right-2">
+                      <CompDesignerBtns
+                        moveComponent={moveComponent}
+                        deleteComponent={deleteComponent}
+                        i={i}
+                      />
+                    </div>
+                    <SectionText preview={true} />
                   </div>
-                  <SectionText preview={true} />
-                </div>
+                </>
               ) : component._name === "heroOverlay" ? (
-                <div className="relative" key={i}>
-                  <div className="absolute top-2 right-2">
-                  <CompDesignerBtns 
-                   moveComponent={moveComponent} 
-                   deleteComponent={deleteComponent} 
-                   i={i}
+                <>
+                  <ComponentSettings
+                    key={i}
+                    settings={component._settings}
+                    index={i}
                   />
-                  </div>{" "}
-                  <HeroOverlay preview={true} />
-                </div>
+                  <div className="relative" key={i}>
+                    <div className="absolute top-2 right-2">
+                      <CompDesignerBtns
+                        moveComponent={moveComponent}
+                        deleteComponent={deleteComponent}
+                        i={i}
+                      />
+                    </div>{" "}
+                    <HeroOverlay preview={true} />
+                  </div>
+                </>
               ) : null
             )
           ) : (
@@ -128,7 +149,9 @@ export default function PageDesignerUI() {
               onDragLeave={(e) => setDragOver(false)}
               onDrop={(e) => setDragOver(false)}
             >
-              <h3 className="mb-5 text-2xl font-bold">Drag and drop components here to start building</h3>
+              <h3 className="mb-5 text-2xl font-bold">
+                Drag and drop components here to start building
+              </h3>
               <div
                 className={`w-32 h-32 bg-base-200 rounded flex items-center justify-center opacity-70  `}
               >
@@ -140,7 +163,8 @@ export default function PageDesignerUI() {
           <Footer preview={true} />
         </div>
       </section>
-      <DesignerOptionsUI handleComponentDrag={handleComponentDrag}/>
+      <DesignerOptionsUI handleComponentDrag={handleComponentDrag} />
+      </Suspense>
     </>
   );
 }
