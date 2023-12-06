@@ -9,8 +9,7 @@ import { useState } from "react";
 import CompDesignerBtns from "./DesignerUI-component-buttons";
 import DesignerOptionsUI from "./DesignerOptionsUI";
 import ComponentSettings from "./ComponentSettings";
-import { Suspense } from "react";
-import Loading from "@/app/hcms/admin/create-page/loading";
+
 interface PageComponent {
   _name: string;
   _displayName: string;
@@ -21,6 +20,7 @@ export default function PageDesignerUI() {
   // Main controll state
   const [pageComponents, setPageComponents] = useState<PageComponent[]>([]);
 
+  console.log(pageComponents);
   // Drag options
   const [draggingOver, setDragOver] = useState<boolean>(false);
 
@@ -36,7 +36,7 @@ export default function PageDesignerUI() {
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
   };
-  //////////////// Component option ////////////////
+  //////////////// Component buttons ////////////////
 
   const deleteComponent = (i: number) => {
     if (i < 0 || i >= pageComponents.length) {
@@ -69,11 +69,29 @@ export default function PageDesignerUI() {
     setPageComponents(updatedPageComponents);
   };
 
-  //////////////// Menu option end ////////////////
+  //////////////// Update Settings ////////////////
+  const handleUpdateSettings = (
+    settings: any,
+    componentIndex: number
+  ): void => {
+    const updatedPageComponents = [...pageComponents];
+    const updatedComponent = { ...updatedPageComponents[componentIndex] };
+    updatedComponent._settings = settings;
+    updatedPageComponents[componentIndex] = updatedComponent;
+    setPageComponents(updatedPageComponents);
+    console.log(updatedPageComponents);
+  };
+
+  //////////////// Get Settings ////////////////
+  const getValueFromSettings = (component: PageComponent, name: string) => {
+    const setting = component._settings.find(
+      (setting: { name: string }) => setting.name === name
+    );
+    return setting ? setting.value : "";
+  };
 
   return (
     <>
-    <Suspense fallback={<Loading />}>
       <section className="w-full overflow-y-auto m-4 bg-primary custom-scrollbar rounded-md">
         <Header preview={true} />
         <div
@@ -86,9 +104,10 @@ export default function PageDesignerUI() {
               component._name === "heroText" ? (
                 <>
                   <ComponentSettings
+                    handleUpdateSettings={handleUpdateSettings}
                     key={i}
                     settings={component._settings}
-                    index={i}
+                    componentIndex={i}
                   />
                   <div className="relative" key={i}>
                     <div className="absolute top-2 right-2">
@@ -98,15 +117,41 @@ export default function PageDesignerUI() {
                         i={i}
                       />
                     </div>
-                    <HeroText preview={true} />
+                    <HeroText
+                      preview={true}
+                      contentPosition={getValueFromSettings(
+                        component,
+                        "contentPosition"
+                      )}
+                      headerTitle={getValueFromSettings(
+                        component,
+                        "headerTitle"
+                      )}
+                      titleContent={getValueFromSettings(
+                        component,
+                        "titleContent"
+                      )}
+                      buttonText={getValueFromSettings(component, "buttonText")}
+                      link={getValueFromSettings(component, "link")}
+                      textColor={getValueFromSettings(component, "textColor")}
+                      buttonColor={getValueFromSettings(
+                        component,
+                        "buttonColor"
+                      )}
+                      backgroundColor={getValueFromSettings(
+                        component,
+                        "backgroundColor"
+                      )}
+                    />
                   </div>
                 </>
               ) : component._name === "sectionText" ? (
                 <>
                   <ComponentSettings
+                    handleUpdateSettings={handleUpdateSettings}
                     key={i}
                     settings={component._settings}
-                    index={i}
+                    componentIndex={i}
                   />
 
                   <div className="relative" key={i}>
@@ -117,15 +162,35 @@ export default function PageDesignerUI() {
                         i={i}
                       />
                     </div>
-                    <SectionText preview={true} />
+                    <SectionText
+                      preview={true}
+                      contentPosition={getValueFromSettings(
+                        component,
+                        "contentPosition"
+                      )}
+                      headerTitle={getValueFromSettings(
+                        component,
+                        "headerTitle"
+                      )}
+                      titleContent={getValueFromSettings(
+                        component,
+                        "titleContent"
+                      )}
+                      textColor={getValueFromSettings(component, "textColor")}
+                      backgroundColor={getValueFromSettings(
+                        component,
+                        "backgroundColor"
+                      )}
+                    />
                   </div>
                 </>
               ) : component._name === "heroOverlay" ? (
                 <>
                   <ComponentSettings
+                    handleUpdateSettings={handleUpdateSettings}
                     key={i}
                     settings={component._settings}
-                    index={i}
+                    componentIndex={i}
                   />
                   <div className="relative" key={i}>
                     <div className="absolute top-2 right-2">
@@ -135,7 +200,30 @@ export default function PageDesignerUI() {
                         i={i}
                       />
                     </div>{" "}
-                    <HeroOverlay preview={true} />
+                    <HeroOverlay
+                      preview={true}
+                      opacity={getValueFromSettings(component, "opacity")}
+                      headerTitle={getValueFromSettings(
+                        component,
+                        "headerTitle"
+                      )}
+                      image={getValueFromSettings(component, "image")}
+                      titleContent={getValueFromSettings(
+                        component,
+                        "titleContent"
+                      )}
+                      buttonText={getValueFromSettings(component, "buttonText")}
+                      link={getValueFromSettings(component, "link")}
+                      textColor={getValueFromSettings(component, "textColor")}
+                      buttonColor={getValueFromSettings(
+                        component,
+                        "buttonColor"
+                      )}
+                      backgroundColor={getValueFromSettings(
+                        component,
+                        "backgroundColor"
+                      )}
+                    />
                   </div>
                 </>
               ) : null
@@ -163,8 +251,7 @@ export default function PageDesignerUI() {
           <Footer preview={true} />
         </div>
       </section>
-      <DesignerOptionsUI handleComponentDrag={handleComponentDrag} />
-      </Suspense>
+      <DesignerOptionsUI pageComponents={JSON.stringify(pageComponents)} handleComponentDrag={handleComponentDrag} />
     </>
   );
 }

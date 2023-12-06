@@ -26,6 +26,9 @@ export default function HeroText(props: HeroText) {
     backgroundColor,
   } = props;
 
+  
+
+
   const ContentPosition = `
   ${contentPosition?.includes("left") ? "justify-start" : ""}
   ${contentPosition?.includes("center") ? "justify-center" : ""}

@@ -3,8 +3,20 @@ import { connectToDB } from "@/app/lib/utils";
 import { Pages } from "@/app/lib/models";
 import { ActionResponse } from "@/app/lib/types";
 
-export const createNewPage = async () => {
-  //Logic here
+export const createNewPage = async (formData: FormData) => {
+  let response: ActionResponse = {
+    success: false,
+    message: "",
+    data: [],
+  };
+  
+
+  const pageData = formData.get("pageData")
+  const parsedPageData = pageData ? JSON.parse(pageData as string) : null;
+
+  console.log(parsedPageData)
+  return
+
   try {
     // DB stuff here
     connectToDB();

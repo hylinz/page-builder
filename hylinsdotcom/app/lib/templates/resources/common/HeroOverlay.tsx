@@ -29,29 +29,39 @@ export default function HeroOverlay(props: HeroOverlayProps) {
     buttonColor,
     backgroundColor,
   } = props;
+  let opacityValue = '';
+  if (opacity) {
+    opacityValue = `bg-opacity-${opacity}`
+  }
 
+  console.log(opacity)
+  console.log(opacityValue)
   return (
     <>
       {preview ? (
         <div
           className={`hero min-h-screen`}
           style={{
-            backgroundImage: image
-              ? image
-              : "url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg)",
+            backgroundImage: image || "url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg)",
+            backgroundColor: backgroundColor || '',
           }}
         >
           <div
-            className={`hero-overlay bg-opacity-${opacity ? opacity : "100"} `}
+            className={`hero-overlay ${opacityValue ? opacityValue : ""}`}
           ></div>
-          <div className={`hero-content text-center text-neutral-content`}>
+          <div className={`hero-content text-center text-neutral-content ${textColor}`}>
             <div className="max-w-md">
               <h2 className="mb-5 text-5xl font-bold">
                 {headerTitle ? headerTitle : "Preview Title"}
               </h2>
               <p className="mb-5">{titleContent ? titleContent : "Preview content goes here, this time there is no bacon!"}</p>
-              <button className="btn btn-primary" onClick={(e) => e.preventDefault()}>
-                  {buttonText ? buttonText : "Learn more"}
+              <button
+                className={`btn ${
+                  buttonColor ? buttonColor : "btn-primary hover:base-200"
+                }`}
+                onClick={(e) => e.preventDefault()}
+              >
+                {buttonText ? buttonText : "Click"}
               </button>
             </div>
           </div>
@@ -66,7 +76,7 @@ export default function HeroOverlay(props: HeroOverlayProps) {
           }}
         >
           <div
-            className={`hero-overlay bg-opacity-${opacity ? opacity : "100"} `}
+            className={`hero-overlay ${opacity ? opacity : "100"} `}
           ></div>
           <div className={`hero-content text-center text-neutral-content`}>
             <div className="max-w-md">
@@ -74,8 +84,12 @@ export default function HeroOverlay(props: HeroOverlayProps) {
                 {headerTitle ? headerTitle : ""}
               </h2>
               <p className="mb-5">{titleContent ? titleContent : ""}</p>
-              <button className="btn btn-primary">
-                <Link href={link ? link : ""}>
+              <button
+                className={`btn ${
+                  buttonColor ? buttonColor : "btn-primary hover:base-200"
+                }`}
+              >
+                <Link href={link ? link : "/"}>
                   {buttonText ? buttonText : ""}
                 </Link>
               </button>

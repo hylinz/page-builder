@@ -1,4 +1,5 @@
 "use client";
+import { createNewPage } from "@/app/actions/page-actions";
 import componentList from "@/app/lib/component-list";
 import { useState } from "react";
 import {
@@ -6,15 +7,18 @@ import {
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
 
+
 interface DesignerOptionsUI {
   handleComponentDrag: (e: React.DragEvent, component: string) => void;
+  pageComponents: string;
 }
 
 export default function DesignerOptionsUI(props: DesignerOptionsUI) {
   const [menu, toggleMenu] = useState<boolean>(false);
-
   const components = componentList;
-  const { handleComponentDrag } = props;
+  const { handleComponentDrag, pageComponents } = props;
+
+  console.log(pageComponents)
   return (
     <>
       <div
@@ -81,6 +85,12 @@ export default function DesignerOptionsUI(props: DesignerOptionsUI) {
             <MdKeyboardDoubleArrowRight className="text-xl text-primary" />
           )}
         </button>
+        <form action={createNewPage} className="w-full flex justify-center mt-5">
+          <input name="pageData" type="text" hidden disabled value={pageComponents}/>
+          <button className="btn btn-success">
+            Finish
+          </button>
+        </form>
       </div>
     </>
   );
