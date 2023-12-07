@@ -98,7 +98,7 @@ export const DropDown = (props: DropDownProps) => {
           >
             {options
               ? options.map((option, i) => (
-                  <option className={option.value} value={option.value}>
+                  <option className={option.value} value={option.value} key={option.value}>
                     {option.label}
                   </option>
                 ))
@@ -130,7 +130,7 @@ export const TextField = (props: TextFieldProps) => {
     disabled,
     toolTip,
   } = props;
-  console.log("settingsState:");
+  
   return (
     <>
       <label className="label-text text-secondary font-bold">

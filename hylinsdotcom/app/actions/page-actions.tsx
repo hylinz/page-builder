@@ -1,54 +1,42 @@
 "use server";
 import { connectToDB } from "@/app/lib/utils";
 import { Pages } from "@/app/lib/models";
-import { ActionResponse } from "@/app/lib/types";
+import { ActionResponse, CreatePageResponse } from "@/app/lib/types";
 
-export const createNewPage = async (formData: FormData) => {
-  let response: ActionResponse = {
+export const createNewPage = async (
+  prevState: CreatePageResponse,
+  formData: FormData
+) => {
+  const pageTitle = formData.get("pageTitle") || "";
+  const pageDesc = formData.get("pageDesc") || "";
+  let pageUrl = formData.get("pageUrl") || "";
+  const pageData = formData.get("pageData") || "";
+
+  const response: CreatePageResponse = {
     success: false,
     message: "",
-    data: [],
+    errors: [],
+    fieldValues: {
+      pageTitle: "",
+      pageDesc: "",
+      pageUrl: "",
+      pageData: "",
+    },
   };
+
+  
+  if (!(typeof pageUrl === "string") || !pageUrl.match(/[\w-]+$/)) {
+    response.success = false;
+    response.errors.push({name: 'pageUrl', message: 'Invalid URL format, use alphanumeric numbers and valid url characters.'})
+  }
   
 
-  const pageData = formData.get("pageData")
-  const parsedPageData = pageData ? JSON.parse(pageData as string) : null;
-
-  console.log(parsedPageData)
-  return
+  return response;
 
   try {
-    // DB stuff here
     connectToDB();
-
-    const newPage = new Pages({
-      title: "mypage",
-      body: [
-        {
-          type: "p",
-          style: "normal",
-          custom: "",
-          text: "Welcome to my page",
-        },
-        {
-          type: "normal",
-          style: "normal",
-          custom: "",
-          text: "You can type out a bunch of stuff here and it will be rendered on the page, hopefully.. lets not say the hi before we do the ho.",
-        },
-      ],
-      template: "article",
-      settings: [
-        {
-          name: "Visible",
-          description: "Should this page be visible?",
-          value: true,
-        },
-      ],
-    });
-    await newPage.save();
   } catch (error) {
-    console.log(`Failed to add page: ${error}`);
+    return response;
   }
 };
 
@@ -91,7 +79,6 @@ export const getPageData = async (name: string) => {
     };
   }
 };
-
 
 export const getAllPages = async () => {
   let response: ActionResponse = {

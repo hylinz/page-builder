@@ -9,18 +9,17 @@ import { useState } from "react";
 import CompDesignerBtns from "./DesignerUI-component-buttons";
 import DesignerOptionsUI from "./DesignerOptionsUI";
 import ComponentSettings from "./ComponentSettings";
-
-interface PageComponent {
-  _name: string;
-  _displayName: string;
-  _settings?: any;
-}
+import { PageComponent } from "@/app/lib/types";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import React, { Suspense } from 'react';
 
 export default function PageDesignerUI() {
   // Main controll state
-  const [pageComponents, setPageComponents] = useState<PageComponent[]>([]);
+  const [pageComponents, setPageComponents] = useState<PageComponent[] | []>(
+    []
+  );
 
-  console.log(pageComponents);
   // Drag options
   const [draggingOver, setDragOver] = useState<boolean>(false);
 
@@ -79,7 +78,6 @@ export default function PageDesignerUI() {
     updatedComponent._settings = settings;
     updatedPageComponents[componentIndex] = updatedComponent;
     setPageComponents(updatedPageComponents);
-    console.log(updatedPageComponents);
   };
 
   //////////////// Get Settings ////////////////
@@ -91,6 +89,7 @@ export default function PageDesignerUI() {
   };
 
   return (
+    <Suspense fallback={<p>loading</p>}>
     <>
       <section className="w-full overflow-y-auto m-4 bg-primary custom-scrollbar rounded-md">
         <Header preview={true} />
@@ -102,15 +101,16 @@ export default function PageDesignerUI() {
           {pageComponents && pageComponents.length > 0 ? (
             pageComponents.map((component: PageComponent, i: number) =>
               component._name === "heroText" ? (
-                <>
-                  <ComponentSettings
-                    handleUpdateSettings={handleUpdateSettings}
-                    key={i}
-                    settings={component._settings}
-                    componentIndex={i}
-                  />
-                  <div className="relative" key={i}>
-                    <div className="absolute top-2 right-2">
+                <div key={`parent-${i.toString()}`}>
+                  <aside key={`CS-${i.toString()}`}>
+                    <ComponentSettings
+                      handleUpdateSettings={handleUpdateSettings}
+                      settings={component._settings}
+                      componentIndex={i}
+                    />
+                  </aside>
+                  <main className="relative" key={`main-${i.toString()}`}>
+                    <div key={`btns-${i}`} className="absolute top-2 right-2">
                       <CompDesignerBtns
                         moveComponent={moveComponent}
                         deleteComponent={deleteComponent}
@@ -143,18 +143,20 @@ export default function PageDesignerUI() {
                         "backgroundColor"
                       )}
                     />
-                  </div>
-                </>
+                  </main>
+                </div>
               ) : component._name === "sectionText" ? (
-                <>
-                  <ComponentSettings
-                    handleUpdateSettings={handleUpdateSettings}
-                    key={i}
-                    settings={component._settings}
-                    componentIndex={i}
-                  />
+                <div key={`parent-${i.toString()}`}>
+                  <aside key={`CS-${i.toString()}`}>
+                    <ComponentSettings
+                      handleUpdateSettings={handleUpdateSettings}
+                      key={i}
+                      settings={component._settings}
+                      componentIndex={i}
+                    />
+                  </aside>
 
-                  <div className="relative" key={i}>
+                  <main className="relative" key={`main-${i.toString()}`}>
                     <div className="absolute top-2 right-2">
                       <CompDesignerBtns
                         moveComponent={moveComponent}
@@ -182,17 +184,20 @@ export default function PageDesignerUI() {
                         "backgroundColor"
                       )}
                     />
-                  </div>
-                </>
+                  </main>
+                </div>
               ) : component._name === "heroOverlay" ? (
-                <>
-                  <ComponentSettings
-                    handleUpdateSettings={handleUpdateSettings}
-                    key={i}
-                    settings={component._settings}
-                    componentIndex={i}
-                  />
-                  <div className="relative" key={i}>
+                <div key={`parent-${i.toString()}`}>
+                  <aside key={`CS-${i.toString()}`}>
+                    <ComponentSettings
+                      handleUpdateSettings={handleUpdateSettings}
+                      key={i}
+                      settings={component._settings}
+                      componentIndex={i}
+                    />
+                  </aside>
+
+                  <main className="relative" key={`main-${i.toString()}`}>
                     <div className="absolute top-2 right-2">
                       <CompDesignerBtns
                         moveComponent={moveComponent}
@@ -224,8 +229,8 @@ export default function PageDesignerUI() {
                         "backgroundColor"
                       )}
                     />
-                  </div>
-                </>
+                  </main>
+                </div>
               ) : null
             )
           ) : (
@@ -251,7 +256,24 @@ export default function PageDesignerUI() {
           <Footer preview={true} />
         </div>
       </section>
-      <DesignerOptionsUI pageComponents={JSON.stringify(pageComponents)} handleComponentDrag={handleComponentDrag} />
+      <DesignerOptionsUI
+        pageComponents={JSON.stringify(pageComponents)}
+        setPageComponents={setPageComponents}
+        handleComponentDrag={handleComponentDrag}
+      />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
+    </ Suspense>
   );
 }

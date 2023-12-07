@@ -1,5 +1,6 @@
 import AdminHeader from "./ui/AdminHeader";
 import AdminSideBar from "./ui/AdminSideBar";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AdminLayout({
   children,

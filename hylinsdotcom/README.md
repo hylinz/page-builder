@@ -1,5 +1,14 @@
+# 07/12
+## Page designer buttons and reusability
+
+Okay my goal for today is to get the data link going between front and backend for the designer, decide on the database & set up connection. 
+Gone and done the above, not devided on the db though, but I am thinking yeah maybe normal relational & prisma or vercels own
+
+May do more today but for now Imma play some dark souls 3
+
+
 # 06/12
-## Notes dev notes
+## Page designer buttons and reusability
 Productive day, had a bunch of shit going against me to begin with, couldnt figure out a simple state thing between components, kept getting infitity loop errors whatever that means
 
 Really worked out the dynamic input buttons and preview shit works absolutely fantastic apart from a few tailwind issues, I did it by specifying certain inputs such as number, input, textarea etc and then build and map props against my static component setting file, this allows for easy access to adding new forms. 
@@ -10,7 +19,7 @@ Happy with progress
 
 # 05/12
 
-## Random dev log
+## Page designer
 Decide upon page desinger component setting data structure, can currently be passed in as anything within reason to the edit component
 
 Will need to think of something that will allow for dynamic rendering of inputs for the preview, maybe direct onchange value that updates the array? 
@@ -24,7 +33,8 @@ type bool, type str etc
 # To Do:
 
 - Create the form that sends the data
-- Create the endpoint that accepts the data
+- Create the endpoint that accepts the data-
+- decide on database
 - Set up mongo/prisma schema
 - Display page
 - Create template type

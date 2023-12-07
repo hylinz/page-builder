@@ -6,19 +6,20 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function Page(props: any) {
-    const { page } = props.params;
-    const response: ActionResponse = await getPageData(page);
+    // const { page } = props.params;
+    // const response: ActionResponse = await getPageData(page);
 
-    if (!response.success) {
-      redirect('/not-found')
-    }
+    // if (!response.success) {
+    //   redirect('/not-found')
+    // }
 
-    const { data } = response
+    // const { data } = response
 
     return (
     <main className="flex min-h-screen w-full flex-col">
-      {data?.template && data?.template === 'article' ? <Article data={data} /> : ''}
-      {data?.template && data?.template === 'default' ? <Default data={data} /> : ''}
+      {/* {data?.template && data?.template === 'article' ? <Article data={data} /> : ''}
+      {data?.template && data?.template === 'default' ? <Default data={data} /> : ''} */}
+      Hello
     </main>
   );
 }

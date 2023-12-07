@@ -43,7 +43,6 @@ export const UpdateHeaderConfig = async (
       // First we need to check if the settings have been set up
       const currentSettings = await GeneralSettings.find({});
 
-      console.log(currentSettings)
 
       // No settings, create a new one, simple! In the future this should probably move..
       // Idea: create an initial set up form that sets up the application as such there should always be a settings document

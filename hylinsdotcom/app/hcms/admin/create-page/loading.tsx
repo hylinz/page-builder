@@ -1,10 +1,8 @@
 export default function Loading() {
   return (
-    <section className="w-full overflow-y-auto m-4 bg-primary custom-scrollbar rounded-md">
-      <div className="animate-pulse">
-        <div className="h-8 bg-gray-300 rounded mb-4"></div>
-        <div className="h-8 bg-gray-300 rounded mb-4"></div>
-        <div className="h-8 bg-gray-300 rounded mb-4"></div>
+    <section className="animate-pulse w-full h-screen m-4 flex justify-center items-center">
+      <div className="flex flex-col w-full items-center">
+      <h2>Loading page designer</h2>
       </div>
     </section>
   );

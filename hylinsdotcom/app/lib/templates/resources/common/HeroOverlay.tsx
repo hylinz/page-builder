@@ -34,8 +34,7 @@ export default function HeroOverlay(props: HeroOverlayProps) {
     opacityValue = `bg-opacity-${opacity}`
   }
 
-  console.log(opacity)
-  console.log(opacityValue)
+
   return (
     <>
       {preview ? (

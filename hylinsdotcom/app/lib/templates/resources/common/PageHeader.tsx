@@ -24,7 +24,7 @@ export default async function PageHeader(props: HeaderProps) {
     headerTitlePosition, // string optional
   } = props;
 
-  console.log(props)
+
 
   const headerTitleStyle = `
   ${headerTitlePosition?.includes("left") ? "justify-start" : ""}
