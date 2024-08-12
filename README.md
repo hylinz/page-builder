@@ -18,4 +18,4 @@ Very primitive attempt at building a serverless template engine where the user c
 
 ## Example
 
-![Alt Text](https://github.com/hylinz/page-builder/tree/main/src/img/example.gif)
+![Alt Text](https://github.com/hylinz/page-builder/blob/main/src/img/example.gif)
